@@ -4,11 +4,10 @@ import { ThemeContext } from './theme-context';
 const STORAGE_KEY = 'causehub-theme';
 
 function getInitialTheme() {
-  if (typeof window === 'undefined') return 'dark';
+  if (typeof window === 'undefined') return 'light';
   const stored = window.localStorage.getItem(STORAGE_KEY);
   if (stored === 'light' || stored === 'dark') return stored;
-  const prefersLight = window.matchMedia?.('(prefers-color-scheme: light)').matches;
-  return prefersLight ? 'light' : 'dark';
+  return 'light';
 }
 
 export function ThemeProvider({ children }) {

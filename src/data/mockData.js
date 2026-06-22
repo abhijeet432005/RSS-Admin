@@ -103,3 +103,74 @@ export function findRecordById(kind, id) {
   const source = kind === 'volunteer' ? VOLUNTEERS : kind === 'donation' ? DONATIONS : MEMBERS;
   return source.find((r) => String(r.id) === String(id));
 }
+
+
+/* ------------------------------- Events -------------------------------- */
+
+const EVENT_NAMES = [
+  'Annual Fundraising Gala',
+  'Volunteer Orientation Day',
+  'School Supplies Drive',
+  'Community Health Camp',
+  'Tree Plantation Drive',
+  'Donor Appreciation Meet',
+  'Skill Training Workshop',
+  'Winter Blanket Distribution',
+  'Awareness Walkathon',
+  'Board Strategy Meeting',
+  'Youth Mentorship Kickoff',
+  'Emergency Relief Briefing',
+];
+
+const VENUES = [
+  'Community Hall, MG Road',
+  'Town Park Pavilion',
+  'St. Xavier School Auditorium',
+  'District Sports Complex',
+  'Civic Center, Sector 21',
+  'Lake View Convention Center',
+];
+
+const EVENT_NOTES = [
+  'Please arrive 30 minutes early for registration.',
+  'Carry a valid ID for entry.',
+  'Light refreshments will be provided.',
+  'Volunteers should wear the organisation t-shirt.',
+  '',
+  '',
+];
+
+function buildEvent(id, rand) {
+  const isOnline = rand() > 0.55;
+  const name = EVENT_NAMES[(id - 1) % EVENT_NAMES.length];
+  const month = 1 + Math.floor(rand() * 12);
+  const day = 1 + Math.floor(rand() * 27);
+  const date = `2026-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+  const hour = 9 + Math.floor(rand() * 9);
+  const minute = rand() > 0.5 ? '00' : '30';
+  const time = `${String(hour).padStart(2, '0')}:${minute}`;
+
+  return {
+    id,
+    name: `${name} ${2026}`,
+    description:
+      'Join us for this initiative as we bring the community together to make a tangible difference. All members and volunteers are welcome to attend and contribute.',
+    date,
+    time,
+    mode: isOnline ? 'online' : 'offline',
+    venue: isOnline ? 'Online (link shared below)' : pick(rand, VENUES),
+    meetLink: isOnline ? `https://meet.causehub.org/${name.toLowerCase().replace(/\s+/g, '-')}-${id}` : '',
+    note: pick(rand, EVENT_NOTES),
+  };
+}
+
+function makeEvents(count, seed) {
+  const rand = mulberry32(seed);
+  const list = [];
+  for (let i = 1; i <= count; i += 1) {
+    list.push(buildEvent(i, rand));
+  }
+  return list;
+}
+
+export const EVENTS = makeEvents(9, 4004);
