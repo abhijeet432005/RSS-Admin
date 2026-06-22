@@ -102,10 +102,10 @@ function SidebarBase({ open = false, onClose }) {
       {open && <div className="sidebar-backdrop" onClick={onClose} aria-hidden="true" />}
       <aside className={`sidebar${open ? ' sidebar--open' : ''}`}>
         <div className="sidebar__brand">
-          <span className="sidebar__logo">
+          <span className="sidebar__logo ">
             <Sparkles size={20} strokeWidth={2.4} />
           </span>
-          <span className="sidebar__brand-name">CauseHub</span>
+          <span className="sidebar__brand-name">RSSP</span>
           <button type="button" className="sidebar__close" onClick={onClose} aria-label="Close menu">
             <X size={18} />
           </button>
